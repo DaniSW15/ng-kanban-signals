@@ -1,1 +1,71 @@
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
 /* You can add global styles to this file, and also import other style files */
+
+/* 1. Definimos las variables para el Modo Claro */
+:root {
+  --app-bg: #f4f7f6;
+  --header-bg: #1976d2;
+  --header-text: #ffffff;
+  --text-main: #333333;
+  --filter-bg: #e3f2fd;
+  --column-bg: transparent; 
+}
+
+/* 2. Definimos las variables para el Modo Oscuro */
+body.dark-theme {
+  color-scheme: dark; /* Para cambiar los colores mágicos de Material M3 */
+  --mat-sys-surface: #121212;
+  --mat-sys-on-surface: #e0e0e0;
+  
+  --app-bg: #121212;
+  --header-bg: #1f1f1f;
+  --header-text: #e0e0e0;
+  --text-main: #e0e0e0;
+  --filter-bg: #2d2d2d;
+  --column-bg: #2d2d2d;
+}
+
+body {
+  background-color: var(--app-bg);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  height: 100%;
+}
+

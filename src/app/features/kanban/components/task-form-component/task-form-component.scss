@@ -1,0 +1,21 @@
+.task-form {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background: var(--filter-bg);
+    color: var(--text-main);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+mat-form-field {
+    flex: 1;
+    min-width: 200px;
+}
+
+.submit-btn {
+    height: 56px;
+}

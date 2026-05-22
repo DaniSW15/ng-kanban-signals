@@ -1,0 +1,26 @@
+<div class="column" [class]="getColumnClass()" role="region" [attr.aria-label]="title()">
+    <div class="column-header">
+        <h2>{{ title() }}</h2>
+        <span class="task-count" aria-live="polite" [attr.aria-label]="tasks().length + ' tareas'">{{ tasks().length }}</span>
+    </div>
+
+    <div class="tasks-container" role="list" [attr.aria-label]="'Tareas en ' + title()">
+        @for (task of tasks(); track task.id) {
+            <app-task-card-component
+                role="listitem"
+                animate.enter="task-enter"
+                animate.leave="task-leave"
+                cdkDrag
+                [cdkDragData]="task"
+                [task]="task"
+                (taskMoved)="onMove(task, $event)"
+                (taskEdited)="editTask($event)"
+                (taskDeleted)="deleteTask($event)"
+            />
+        } @empty {
+        <div class="empty-column">
+            <p>{{ emptyStateMessage() }}</p>
+        </div>
+        }
+    </div>
+</div>

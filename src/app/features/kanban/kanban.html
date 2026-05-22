@@ -1,0 +1,74 @@
+<header class="kanban-header">
+    <h1>📋 Mi Tablero Kanban</h1>
+    <p>Organiza tus tareas de manera eficiente y visual</p>
+    <!-- Dark Mode Toggle -->
+    <button mat-icon-button (click)="themeService.toggleTheme()" aria-label="Toggle Dark Mode">
+        <mat-icon>{{ themeService.isDarkMode() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    </button>
+</header>
+
+<div class="kanban-board">
+    <!-- Formulario para crear tarea delegando a app-task-form-component -->
+    <app-task-form-component (taskCreated)="onTaskCreated($event)" />
+
+    <!-- Filtro por prioridad -->
+    <div class="filter-bar">
+        <mat-form-field appearance="outline">
+            <mat-label>🔍 Filtrar por prioridad</mat-label>
+            <mat-select (selectionChange)="changeFilter($event.value)" value="all">
+                <mat-option value="all">📋 Todas</mat-option>
+                <mat-option value="low">🟢 Baja</mat-option>
+                <mat-option value="medium">🟡 Media</mat-option>
+                <mat-option value="high">🔴 Alta</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <!-- Columnas Kanban -->
+    <div class="kanban-columns" cdkDropListGroup>
+        <!-- Columna Por Hacer -->
+        <app-column-component 
+            cdkDropList
+            id="todoList"
+            [cdkDropListConnectedTo]="['inProgressList', 'doneList']"
+            columnType="todo"
+            title="📌 Por Hacer"
+            [cdkDropListData]="taskService.taskByColumn().todo"
+            [tasks]="taskService.taskByColumn().todo"
+            (cdkDropListDropped)="onDrop($event, 'todo')"
+            (taskMoved)="moveTask($event.task, $event.newStatus)"
+            (taskEdited)="editTask($event)"
+            (taskDeleted)="deleteTask($event)"
+            emptyStateMessage="✨ No hay tareas pendientes" />
+
+        <!-- Columna En Progreso -->
+        <app-column-component 
+            cdkDropList
+            id="inProgressList"
+            [cdkDropListConnectedTo]="['todoList', 'doneList']"
+            columnType="inProgress"
+            title="⏳ En Progreso"
+            [tasks]="taskService.taskByColumn().inProgress"
+            [cdkDropListData]="taskService.taskByColumn().inProgress"
+            (cdkDropListDropped)="onDrop($event, 'inProgress')"
+            (taskMoved)="moveTask($event.task, $event.newStatus)"
+            (taskEdited)="editTask($event)"
+            (taskDeleted)="deleteTask($event)"
+            emptyStateMessage="⏳ No hay tareas en progreso" />
+
+        <!-- Columna Hecho -->
+        <app-column-component 
+            cdkDropList
+            id="doneList"
+            [cdkDropListConnectedTo]="['todoList', 'inProgressList']"
+            columnType="done"
+            title="✅ Hecho"
+            [tasks]="taskService.taskByColumn().done"
+            [cdkDropListData]="taskService.taskByColumn().done"
+            (cdkDropListDropped)="onDrop($event, 'done')"
+            (taskMoved)="moveTask($event.task, $event.newStatus)"
+            (taskEdited)="editTask($event)"
+            (taskDeleted)="deleteTask($event)"
+            emptyStateMessage="✅ Tareas completadas aparecerán aquí" />
+    </div>
+</div>

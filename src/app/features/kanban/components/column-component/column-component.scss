@@ -1,0 +1,71 @@
+:host {
+    display: block;
+}
+
+.column {
+    background: var(--filter-bg, #f4f5f7);
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 500px;
+    transition: background 0.3s ease;
+
+    .column-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--text-main);
+
+        h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .task-count {
+            background: var(--app-bg, #fff);
+            color: var(--text-main);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    }
+}
+
+.empty-column {
+    text-align: center;
+    color: #999;
+    padding: 40px 20px;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+}
+
+.task-enter {
+    animation: slideIn 0.25s ease-out;
+}
+
+.task-leave {
+    animation: slideOut 0.2s ease-in;
+}
