@@ -71,7 +71,7 @@ npm run build
 
 # Arquitectura y Estructura del Proyecto
 
-La aplicación utiliza un enfoque **Feature-Driven** (basado en funcionalidades) separando la lógica en un Smart Component (Container) nativo y múltiples Dumb Components (Presenters):
+La aplicación sigue los principios de **Clean Architecture** (Arquitectura Limpia). Este enfoque garantiza que el código sea escalable, mantenible y esté fuertemente desacoplado, separando las responsabilidades en capas claras: Dominio, Aplicación, Infraestructura y Presentación.
 
 ```txt
 src/app/
@@ -79,21 +79,34 @@ src/app/
 │   └── theme-service.ts    # Servicios singleton globales (Ej. Dark Mode)
 │
 └── features/
-    └── kanban/             # Feature principal (Autocontenida)
-        ├── kanban.ts       # Contenedor (Smart Component) y orquestador
-        ├── components/     # Componentes visuales puros (Dumb Components)
-        │   ├── column/         # Columna contenedora
-        │   ├── confirm-dialog/ # Modal de confirmación genérico
-        │   ├── task-card/      # Tarjeta individual interactiva
-        │   ├── task-edit/      # Modal (Angular Material) edición
-        │   └── task-form/      # Formulario de alta (Signal Forms)
-        ├── models/         # Interfaces de dominio estricto (TypeScript)
-        └── services/       # Lógica de negocio local (TaskService) - Manejo de Estado
+    └── kanban/             # Feature estructurada por capas (Clean Architecture)
+        ├── domain/         # Núcleo de negocio (TypeScript puro)
+        │   ├── models/           # Entidades (task.model.ts)
+        │   └── repositories/     # Contratos/Interfaces (task.repository.ts)
+        │
+        ├── application/    # Casos de uso de la aplicación
+        │   └── task.store.ts     # Store basado en signals que orquesta el repositorio
+        │
+        ├── infrastructure/ # Implementación de la persistencia
+        │   └── repositories/
+        │       └── local-storage-task.repository.ts # Adaptador de LocalStorage
+        │
+        └── presentation/   # Capa visual (Angular, Componentes, HTML, CSS)
+            ├── pages/ 
+            │   └── kanban-page/      # Smart Component que interactúa con la aplicación
+            └── components/           # Dumb Components (puros e independientes)
+                ├── column/
+                ├── confirm-dialog/
+                ├── task-card/
+                ├── task-edit/
+                └── task-form/
 ```
 
-### Patrones Utilizados:
-1.  **Smart/Dumb Pattern:** El componente `kanban.ts` delega tareas y estado, inyectando `TaskService` interactuando vía `input()` / `output()` estricto con sus componentes visuales, promoviendo reutilización total.
-2.  **Estado Reactivo Local (Store-less):** No se empela NgRx. El manejo se provee de forma síncrona a nivel feature con un *State Service* basado exclusivamente en Signals (`TaskService`).
+### Patrones de Diseño Aplicados y Principios SOLID:
+1.  **Inversión de Dependencias (DIP):** El núcleo (Domain) no depende del framework o del navegador (LocalStorage). La capa de Infraestructura implementa el repositorio del dominio, permitiendo escalar fácilmente a una base de datos externa en el futuro.
+2.  **Principio de Responsabilidad Única (SRP):** Cada capa tiene un único objetivo claro. La lógica no está mezclada: el Storage guarda cosas (`infrastructure`), el Store orquesta el estado (`application`) y los componentes solo pintan datos (`presentation`).
+3.  **Smart & Dumb Components:** La capa de `presentation` sigue aplicando la delegación de responsabilidades mediante componentes agnósticos de la lógica de negocio usando la nueva API de Angular (`input()`, `output()`).
+4.  **Estado Predictivo con Signals:** Todo el Reactivity System y Change Detection sigue confiando plenamente en Signals y `OnPush`.
 
 ---
 
