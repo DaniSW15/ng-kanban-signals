@@ -1,20 +1,20 @@
 <h2 mat-dialog-title>Editar Tarea</h2>
 
 <mat-dialog-content>
-    <form [formRoot]="editFormSignal" class="edit-task-form" id="editForm">
+    <form [formRoot]="editForm" class="edit-task-form" id="editForm">
         <mat-form-field appearance="outline">
             <mat-label>Título</mat-label>
-            <input matInput [formField]="editFormSignal.title" placeholder="Título" />
+            <input matInput [formField]="editForm.title" placeholder="Título" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Descripción</mat-label>
-            <textarea matInput [formField]="editFormSignal.description" placeholder="Descripción" rows="3"></textarea>
+            <textarea matInput [formField]="editForm.description" placeholder="Descripción" rows="3"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Prioridad</mat-label>
-            <mat-select [formField]="editFormSignal.priority">
+            <mat-select [formField]="editForm.priority">
                 <mat-option value="low">🟢 Baja</mat-option>
                 <mat-option value="medium">🟡 Media</mat-option>
                 <mat-option value="high">🔴 Alta</mat-option>
@@ -25,5 +25,6 @@
 
 <mat-dialog-actions align="end">
     <button mat-button type="button" (click)="closeModal()">Cancelar</button>
-    <button mat-raised-button color="primary" type="submit" form="editForm" [disabled]="editFormSignal().invalid()">Guardar</button>
+    <button mat-raised-button color="primary" type="submit" form="editForm"
+        [disabled]="editForm().invalid()">Guardar</button>
 </mat-dialog-actions>

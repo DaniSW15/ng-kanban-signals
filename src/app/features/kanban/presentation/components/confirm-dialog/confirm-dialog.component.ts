@@ -16,18 +16,16 @@ import { MatButtonModule } from '@angular/material/button';
       <button mat-raised-button color="warn" (click)="onConfirm()">Eliminar</button>
     </mat-dialog-actions>
   `,
-  styles: [`
-    p { margin-top: 10px; margin-bottom: 20px; }
-  `]
+  styles: [`p { margin-top: 10px; margin-bottom: 20px; }`],
 })
 export class ConfirmDialogComponent {
-  dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
+  private readonly dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
 
-  onConfirm() {
+  onConfirm(): void {
     this.dialogRef.close(true);
   }
 
-  onDecline() {
+  onDecline(): void {
     this.dialogRef.close(false);
   }
 }

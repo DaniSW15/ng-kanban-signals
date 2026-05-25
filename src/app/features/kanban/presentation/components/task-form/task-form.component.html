@@ -1,24 +1,24 @@
-<form [formRoot]="taskFormSignal" class="task-form">
+<form [formRoot]="taskForm" class="task-form">
     <mat-form-field appearance="outline">
         <mat-label>Título</mat-label>
-        <input matInput [formField]="taskFormSignal.title" placeholder="Ej: Comprar leche" />
+        <input matInput [formField]="taskForm.title" placeholder="Ej: Comprar leche" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
         <mat-label>Descripción</mat-label>
-        <input matInput [formField]="taskFormSignal.description" placeholder="Ej: Ir al supermercado por la tarde" />
+        <input matInput [formField]="taskForm.description" placeholder="Ej: Ir al supermercado por la tarde" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
         <mat-label>Prioridad</mat-label>
-        <mat-select [formField]="taskFormSignal.priority">
+        <mat-select [formField]="taskForm.priority">
             <mat-option value="low">🟢 Baja</mat-option>
             <mat-option value="medium">🟡 Media</mat-option>
             <mat-option value="high">🔴 Alta</mat-option>
         </mat-select>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="taskFormSignal().invalid()" class="submit-btn">
+    <button mat-raised-button color="primary" type="submit" [disabled]="taskForm().invalid()" class="submit-btn">
         <mat-icon>add</mat-icon>
         Crear Tarea
     </button>

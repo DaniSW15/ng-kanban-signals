@@ -3,7 +3,6 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px;
-
     background: var(--header-bg);
     color: var(--header-text);
     transition: background 0.3s ease;
@@ -18,10 +17,6 @@
         font-size: 14px;
         opacity: 0.8;
     }
-
-    .dark-mode-toggle {
-        color: white;
-    }
 }
 
 .kanban-board {
@@ -34,16 +29,9 @@
 .filter-bar {
     margin-bottom: 20px;
     padding: 10px;
-
     background: var(--filter-bg);
     border-radius: 4px;
     transition: background 0.3s ease;
-
-    select {
-        margin-left: 10px;
-        padding: 5px 10px;
-        border-radius: 4px;
-    }
 }
 
 .kanban-columns {
